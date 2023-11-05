@@ -7,7 +7,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-from os import environ
+import os
 from flask import Flask, render_template
 app = Flask(__name__)
 # app.jinja_env.trim_blocks = True
@@ -44,4 +44,6 @@ def hbnb():
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=5001)
+    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    port = os.getenv('HBNB_API_PORT', 5000)
+    app.run(host=host, port=port, threaded=True)
