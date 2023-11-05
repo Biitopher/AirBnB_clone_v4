@@ -11,6 +11,10 @@ from sqlalchemy.orm import relationship
 
 class State(BaseModel, Base):
     """Representation of state """
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)
+
     if models.storage_t == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
@@ -19,10 +23,6 @@ class State(BaseModel, Base):
                               cascade="all, delete, delete-orphan")
     else:
         name = ""
-
-    def __init__(self, *args, **kwargs):
-        """initializes state"""
-        super().__init__(*args, **kwargs)
 
     if models.storage_t != "db":
         @property
