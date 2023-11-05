@@ -18,7 +18,7 @@ $(document).ready(function () {
   });
 
   // Check the API status
-  $.get('http://0.0.0.0:5001/api/v1/status/', function (data) {
+  $.get('http://localhost:5001/api/v1/status/', function (data) {
     if (data.status === 'OK') {
       $('#api_status').toggleClass('available');
     } else {
@@ -28,38 +28,33 @@ $(document).ready(function () {
 
   // Request places from the front-end
   $.ajax({
-    url: 'http://0.0.0.0:5001/api/v1/places_search/',
     type: 'POST',
-    contentType: 'application/json',
+    url: 'http://localhost:5001/api/v1/places_search',
     data: JSON.stringify({}),
+    contentType: 'application/json',
     success: function (data) {
-      // Loop through the results and create article tags representing places
+      // Loop through the result and create article tags for places
       const placesSection = $('.places');
+      placesSection.empty(); // Clear existing content
 
-      for (const place of data) {
+      data.forEach(function (place) {
         const placeArticle = $('<article>');
-
-        const titleBox = $('<div class="title_box">');
-        titleBox.append(`<h2>${place.name}</h2>`);
-        titleBox.append(`<div class="price_by_night">$${place.price_by_night}</div>`);
-
-        const information = $('<div class="information">');
-        information.append(`<div class="max_guest">${place.max_guest} Guest${place.max_guest !== 1 ? 's' : ''}</div>`);
-        information.append(`<div class="number_rooms">${place.number_rooms} Bedroom${place.number_rooms !== 1 ? 's' : ''}</div>`);
-        information.append(`<div class="number_bathrooms">${place.number_bathrooms} Bathroom${place.number_bathrooms !== 1 ? 's' : ''}</div>`);
-
-        const description = $('<div class="description">');
-        description.html(place.description);
-
-        placeArticle.append(titleBox);
-        placeArticle.append(information);
-        placeArticle.append(description);
-
+        placeArticle.html(`
+          <div class="title_box">
+            <h2>${place.name}</h2>
+            <div class="price_by_night">$${place.price_by_night}</div>
+          </div>
+          <div class="information">
+            <div class="max_guest">${place.max_guest} Guest${place.max_guest !== 1 ? 's' : ''}</div>
+            <div class="number_rooms">${place.number_rooms} Bedroom${place.number_rooms !== 1 ? 's' : ''}</div>
+            <div class="number_bathrooms">${place.number_bathrooms} Bathroom${place.number_bathrooms !== 1 ? 's' : ''}</div>
+          </div>
+          <div class="description">
+            ${place.description}
+          </div>
+        `);
         placesSection.append(placeArticle);
-      }
+      });
     },
-    error: function (xhr, status, error) {
-      console.error('Error loading places:', error);
-    }
   });
 });
