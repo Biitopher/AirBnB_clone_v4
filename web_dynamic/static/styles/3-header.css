@@ -6,6 +6,24 @@ header {
 }
 header .logo {
     background: url("../images/logo.png") no-repeat;
-    left: 20px;
     height: 100%;
+    left: 20px
+}
+
+header .circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #cccccc;
+  position: absolute;
+  right: 30px;
+}
+
+header .available {
+  background-color: #ff545f;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  right: 30px;
 }
