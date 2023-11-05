@@ -18,7 +18,7 @@ $(document).ready(function () {
   });
 
   // Check the API status
-  $.get('http://localhost:5001/api/v1/status/', function (data) {
+  $.get('http://0.0.0.0:5001/api/v1/status/', function (data) {
     if (data.status === 'OK') {
       $('#api_status').toggleClass('available');
     } else {
@@ -29,7 +29,7 @@ $(document).ready(function () {
   // Request places from the front-end
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:5001/api/v1/places_search',
+    url: 'http://0.0.0.0:5001/api/v1/places_search',
     data: JSON.stringify({}),
     contentType: 'application/json',
     success: function (data) {
